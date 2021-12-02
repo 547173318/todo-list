@@ -8,7 +8,9 @@
         <el-button type="primary" icon="el-icon-plus" @click="handleAdd" circle></el-button>
       </el-col>
     </el-row>
+
     <el-divider></el-divider>
+
     <el-table :data="tableData" style="width: 100%" :row-class-name="tableRowClassName">
       <el-table-column type="index" width="50"></el-table-column>
       <el-table-column align="center" label="待办事项" prop="title"></el-table-column>
@@ -37,6 +39,7 @@
         </template>
       </el-table-column>
     </el-table>
+  
   </el-card>
 </template>
 
@@ -52,7 +55,9 @@ export default {
   mounted() {
     this.axios
       .get("/v1/todo")
-      .then(response => (this.tableData = response.data));
+      .then(response =>{
+        this.tableData = response.data
+      });
   },
   methods: {
     tableRowClassName({ row }) {
@@ -84,6 +89,7 @@ export default {
         });
     },
     handleDelete(index, id) {
+      alert(id)
       this.axios.delete("/v1/todo/" + id).then(() => {
         this.tableData.splice(index, 1);
         this.$message({

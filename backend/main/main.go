@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
@@ -13,9 +14,9 @@ var(
 
 //mode
 type Todo struct {
-	gorm.Model
-	Title string
-	Status bool
+	ID uint `json:"id"`
+	Title string `json:"title"`
+	Status bool `json:"status"`
 }
 
 //数据库连接
@@ -35,22 +36,49 @@ func main()  {
 		panic(err)
 	}
 	defer db.Close()
-
-
+	
 	db.AutoMigrate(&Todo{})
-
-	//var todo Todo{}
-	//db.Create(todo)
-
-
 
 	//创建一个初始化的gin引擎
 	r := gin.Default()
 
-	r.GET("/index", func(context *gin.Context) {
-		context.JSON(http.StatusOK,"index")
-	})
+
+	//配置路由
+	userGroup := r.Group("/v1")
+	{
+		userGroup.GET("/todo", func(c *gin.Context) {
+			var todos []Todo
+			db.Find(&todos)
+			c.JSON(http.StatusOK,todos)
+			fmt.Printf("%#v",todos)
+
+		})
+		userGroup.POST("/todo", func(c *gin.Context) {
+			var todo Todo
+			c.ShouldBind(&todo)
+			db.Create(&todo)
+			c.JSON(http.StatusOK,todo)
+		})
+		userGroup.PUT("/todo/:id", func(c *gin.Context) {
+			var todo Todo
+			id,_:=c.Params.Get("id")
+
+			//数据库中找到原先的
+			db.Where("id=?",id).Find(&todo)
+
+			//更改数据库中找到的
+			c.ShouldBind(&todo)
+
+			//保存更改
+			db.Save(&todo)
+		})
+		userGroup.DELETE("/todo/:id", func(c *gin.Context) {
+			id,_:=c.Params.Get("id")
+			db.Where("id=?",id).Delete(&Todo{})
+		})
+
+	}
 
 	//启动服务，默认在port8080
-	r.Run()
+	r.Run(":9000")
 }
