@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
@@ -50,7 +49,6 @@ func main()  {
 			var todos []Todo
 			db.Find(&todos)
 			c.JSON(http.StatusOK,todos)
-			fmt.Printf("%#v",todos)
 
 		})
 		userGroup.POST("/todo", func(c *gin.Context) {
