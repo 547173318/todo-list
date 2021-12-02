@@ -1,4 +1,4 @@
-### 后端（port:9000）
+### 1、后端（port:9000）
 #### 数据库
 * mysql
   
@@ -8,7 +8,7 @@ go run main.go
 ```
 
 
-### vue前端（port:8080）
+### 2、vue前端（port:8080）
 #### 启动项目
 ```
 npm install
