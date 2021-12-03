@@ -13,7 +13,7 @@
         </el-col>
       </el-row>
     </el-main>
-    <el-footer>q1mi出品 Go学习交流QQ群：645090316</el-footer>
+    <el-footer>don`t quit</el-footer>
   </el-container>
 </template>
 
