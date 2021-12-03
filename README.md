@@ -1,6 +1,6 @@
 ## 1、项目介绍
 > 该项目只是对于go语言进行网络编程的起手项目，所以着重于服务器的编写
-* (gin的学习记录)[]
+* [gin的学习记录](https://github.com/547173318/redo-golang/tree/main/doc/3-Golang%E4%B9%8B%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/1-gin%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95)
 * 服务器开发使用到的技术栈
     * 使用gin搭建web相应服务器
     * 使用gorm调用mysql服务
